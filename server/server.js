@@ -4,6 +4,10 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
+
+
 
 //app-configs
 const app = express();
@@ -13,6 +17,8 @@ const port = process.env.PORT || 9000;
 app.use(express.json());
 app.use(cors());
 
+ app.use('/posts',postRoutes);
+ app.use('/user',userRoutes);
 
 //dbconfigs
  const connection_url ='mongodb+srv://ddonald17:ddonald17@cluster0.fcgy7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
