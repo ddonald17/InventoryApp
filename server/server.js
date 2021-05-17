@@ -30,5 +30,3 @@ mongoose.connect(connection_url, { useNewUrlParser: true, useUnifiedTopology: tr
 
 
 mongoose.set('useFindAndModify',false);
-
-
