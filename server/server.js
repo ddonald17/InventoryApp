@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
+import productRoutes from './routes/products.js'
 
 
 
@@ -19,6 +20,7 @@ app.use(cors());
 
  app.use('/posts',postRoutes);
  app.use('/user',userRoutes);
+ app.use('/product',productRoutes);
 
 //dbconfigs
  const connection_url ='mongodb+srv://ddonald17:ddonald17@cluster0.fcgy7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
