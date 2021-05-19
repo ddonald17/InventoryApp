@@ -4,9 +4,9 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
-import productRoutes from './routes/products.js'
+import productRoutes from './routes/products.js';
+import transactionRoutes from './routes/Transactions.js';
 
 
 
@@ -18,9 +18,10 @@ const port = process.env.PORT || 9000;
 app.use(express.json());
 app.use(cors());
 
- app.use('/posts',postRoutes);
+
  app.use('/user',userRoutes);
  app.use('/product',productRoutes);
+ app.use('./transaction',transactionRoutes);
 
 //dbconfigs
  const connection_url ='mongodb+srv://ddonald17:ddonald17@cluster0.fcgy7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
