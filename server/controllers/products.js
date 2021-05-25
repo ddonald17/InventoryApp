@@ -8,7 +8,7 @@ export const addProd = async (req, res) => {
     const newProd = new Product({ item_id, item_name, category, stock, buy_price });
 
     try {
-        await Product.save();
+        await newProd.save();
 
         res.status(201).json( newProd );
     } catch (error) {

@@ -21,7 +21,7 @@ app.use(cors());
 
  app.use('/user',userRoutes);
  app.use('/product',productRoutes);
- app.use('./transaction',transactionRoutes);
+ app.use('/transaction',transactionRoutes);
 
 //dbconfigs
  const connection_url ='mongodb+srv://ddonald17:ddonald17@cluster0.fcgy7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
