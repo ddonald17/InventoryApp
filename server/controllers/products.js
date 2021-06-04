@@ -3,13 +3,12 @@ import Product from '../models/product.js';
 
 
 export const addProd = async (req, res) => {
-    const { item_id, item_name, category, stock, buy_price } = req.body;
+    const { item_name, category, stock, buy_price } = req.body;
 
-    const newProd = new Product({ item_id, item_name, category, stock, buy_price });
+    const newProd = new Product({  item_name, category, stock, buy_price });
 
     try {
         await newProd.save();
-
         res.status(201).json( newProd );
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -18,11 +17,11 @@ export const addProd = async (req, res) => {
 
 export const updateProd = async (req, res) => {
     const { id } = req.params;
-    const { item_id, item_name, category, stock, buy_price } = req.body;
+    const { item_name, category, stock, buy_price } = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const updatedProd = { item_id, item_name, category, stock, buy_price, _id: id };
+    const updatedProd = { item_name, category, stock, buy_price, _id: id };
 
     await Product.findByIdAndUpdate(id, updatedProd, { new: true });
 
