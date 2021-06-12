@@ -16,14 +16,12 @@ export const addProd = async (req, res) => {
 }
 
 export const updateProd = async (req, res) => {
-    const { id } = req.params;
-    const { item_name, category, stock, buy_price } = req.body;
-    
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    const { id: _id } = req.params;
+    // const { item_name, category, stock, buy_price } = req.body;
+    const prod = req.body;
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send(`No post with id: ${id}`);
 
-    const updatedProd = { item_name, category, stock, buy_price, _id: id };
-
-    await Product.findByIdAndUpdate(id, updatedProd, { new: true });
+    const updatedProd =  await Product.findByIdAndUpdate(_id, { ...prod, _id}, { new: true });
 
     res.json(updatedProd);
 }
