@@ -2,10 +2,9 @@ import React,{useState, useEffect} from 'react';
 import { Paper, makeStyles, TableBody, TableRow, TableCell } from '@material-ui/core';
 import AddItemForm from './AddItemForm';
 import PageHeader from '../../components/PageHeader';
-import {uuid} from "uuidv4";
 import AddIcon from '@material-ui/icons/Add';
 import Controls from "../../components/controls/Controls";
-import { FiberPinRounded, Search } from "@material-ui/icons";
+import { Search } from "@material-ui/icons";
 import {Toolbar, InputAdornment } from  '@material-ui/core';
 import Popup from "../../components/Popup";
 import  useTable from '../../components/useTable';
@@ -32,7 +31,7 @@ const headCells = [
     { id: 'item_name', label: 'Item Name' },
     { id: 'category', label: 'Category' },
     { id: 'buy_price', label: 'Buy Price' },
-    { id: 'stock', label: 'Stock' },
+    { id: 'sell_price', label: 'Stock' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
@@ -43,6 +42,7 @@ function AddItems() {
     const [recordForEdit, setRecordForEdit] = useState(null);
     const [openPopup, setOpenPopup] = useState(false);
     const [records, setRecords] = useState([]);
+    const [edit, setEdit] = useState(false);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
 
@@ -72,33 +72,42 @@ function AddItems() {
         if(allItem) setRecords(allItem);
        };
        getAllItem();
+       
     },[])
 
 
-    const addItemHandler =async (records) =>{
+    const addItemHandler =async (record) =>{
+        console.log(record);
         const request = {
-            id: uuid(),
-            ...records
-        };
+            ...record
+        }
 
         const response = await axios.post("/product", request);
-        setRecords([...records, response.data])
+        // setRecords([...record, response.data])
     }
 
     const updateItemHandler = async (record) => {
-        const response = await axios.put(`/product/${record.id}`, record)
+        console.log(record._id)
+
+        const response = await axios.patch(`/product/${record._id}`, record)
+        console.log(response.data) 
         setRecords(records.map(record =>{
-            return record.id === response.data.id ? {...response.data} : record;
+            return record._id === response.data._id ? {...response.data} : record;
         }))
     }
 
+    const removeItemHandler = async (record) => {
+        await axios.delete(`/product/${record._id}`);
+    }
+
     const addOrEdit = (item , resetForm) => {
-        if (item.id == 0)
-           addItemHandler(item);
+        if (edit)
+           updateItemHandler(item);           
         else
-           updateItemHandler(item);
+           addItemHandler(item);
         resetForm();
         setRecordForEdit(null);
+        setEdit(false);
         setOpenPopup(false);  
     }
 
@@ -144,7 +153,7 @@ function AddItems() {
                         <TableBody>
                             {
                                 recordsAfterPagingAndSorting().map( item =>(
-                                    <TableRow key={item.id}>
+                                    <TableRow key={item._id}>
                                         <TableCell>{item.item_name}</TableCell>
                                         <TableCell>{item.category}</TableCell>
                                         <TableCell>{item.buy_price}</TableCell>
@@ -152,7 +161,7 @@ function AddItems() {
                                         <TableCell>
                                         <Controls.ActionButton
                                             color="primary"
-                                            onClick={() => { openInPopup(item) }}>
+                                            onClick={() => { openInPopup(item) ; setEdit(true); }}>
                                             <EditOutlinedIcon fontSize="small" />
                                         </Controls.ActionButton>
                                         <Controls.ActionButton
