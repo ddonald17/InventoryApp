@@ -111,11 +111,6 @@ function AddTransaction() {
     return (
 
         <>
-         {/* <PageHeader
-                title="Add Item"
-                subTitle="Adding Products to Inventory"
-                icon={<AddIcon fontSize="large" />}
-            /> */}
 
         <Paper className={classes.pageContent}>
                 <Toolbar>
@@ -145,7 +140,7 @@ function AddTransaction() {
                                     <TableRow key={item.id}>
                                         <TableCell>{item.cust_name}</TableCell>
                                         <TableCell>{item.cust_address}</TableCell>
-                                        <TableCell>{item.item}</TableCell>
+                                        <TableCell>{item.item.item_name}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
                                         <TableCell>{item.sell_price}</TableCell>
                                         <TableCell>{item.timestamp}</TableCell>

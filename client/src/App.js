@@ -1,7 +1,7 @@
 import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import Header from './components/header/Header';
+import Header from './components/Header';
 import Home from './pages/home/Home';
 import AddTransaction from './pages/AddTransaction/AddTransaction';
 import AddItems from './pages/AddItem/AddItems';
@@ -37,7 +37,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   appMain: {
     paddingLeft: '80px',
-    width: '100%'
+    width: '100%',
   }
 })
 
@@ -48,8 +48,9 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        
         <Sidebar />
+        {/* <Header /> */}
+
         <div className={classes.appMain}>
           <Switch>
             <Route path='/' exact component={Home} />

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Product from '../models/product.js'
 
 const TransSchema = mongoose.Schema({
     cust_name:{
@@ -9,7 +8,10 @@ const TransSchema = mongoose.Schema({
     cust_address:{
         type: String
     },
-    item: {type: mongoose.Schema.Types.ObjectId, ref: 'Product'},
+    item: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Product'
+    },
     quantity:{
         type: Number,
         required: true

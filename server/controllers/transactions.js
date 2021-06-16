@@ -8,7 +8,7 @@ export const addTrans = async (req, res) => {
     const newTrans = new Transaction({ cust_name, cust_address, item, quantity, sell_price });
 
     try {
-        await newTrans.save();
+        await newTrans.save().populate('item');
 
         res.status(201).json( newTrans );
     } catch (error) {
@@ -18,7 +18,7 @@ export const addTrans = async (req, res) => {
 
 export const getTrans = async (req, res) => { 
     try {
-        const getTransaction = await Transaction.find();
+        const getTransaction = await Transaction.find().populate('item');
                 
         res.status(200).json(getTransaction);
     } catch (error) {

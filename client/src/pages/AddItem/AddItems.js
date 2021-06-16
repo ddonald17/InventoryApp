@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import { Paper, makeStyles, TableBody, TableRow, TableCell } from '@material-ui/core';
 import AddItemForm from './AddItemForm';
-import PageHeader from '../../components/PageHeader';
 import AddIcon from '@material-ui/icons/Add';
 import Controls from "../../components/controls/Controls";
 import { Search } from "@material-ui/icons";
@@ -77,13 +76,13 @@ function AddItems() {
 
 
     const addItemHandler =async (record) =>{
-        console.log(record);
+        // console.log(record);
         const request = {
             ...record
         }
 
         const response = await axios.post("/product", request);
-        // setRecords([...record, response.data])
+         setRecords([...records, response.data])
     }
 
     const updateItemHandler = async (record) => {
@@ -120,14 +119,7 @@ function AddItems() {
 
    
     return (
-
         <>
-         {/* <PageHeader
-                title="Add Item"
-                subTitle="Adding Products to Inventory"
-                icon={<AddIcon fontSize="large" />}
-            /> */}
-
         <Paper className={classes.pageContent}>
                 <Toolbar>
                     <Controls.Input
