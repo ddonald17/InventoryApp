@@ -16,6 +16,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 const useStyles = makeStyles(theme => ({
     pageContent: {
         padding: theme.spacing(3),
+        margin: theme.spacing(5),
     },
     searchInput: {
         width: '75%'
@@ -52,7 +53,7 @@ function AddItems() {
         let target = e.target;
         setFilterFn({
             fn: items => {
-                if (target.value == "")
+                if (target.value === "")
                     return items;
                 else
                     return items.filter(x => x.item_name.toLowerCase().includes(target.value))
@@ -97,6 +98,7 @@ function AddItems() {
 
     const removeItemHandler = async (record) => {
         await axios.delete(`/product/${record._id}`);
+        // setRecords(...records);
     }
 
     const addOrEdit = (item , resetForm) => {
@@ -157,7 +159,8 @@ function AddItems() {
                                             <EditOutlinedIcon fontSize="small" />
                                         </Controls.ActionButton>
                                         <Controls.ActionButton
-                                            color="secondary">
+                                            color="secondary" 
+                                            onClick={()=>removeItemHandler(item)}>
                                             <DeleteOutlineIcon fontSize="small" />
                                         </Controls.ActionButton>
                                     </TableCell>

@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react';
 import { Paper, makeStyles, TableBody, TableRow, TableCell } from '@material-ui/core';
-import PageHeader from '../../components/PageHeader';
 import AddIcon from '@material-ui/icons/Add';
 import Controls from "../../components/controls/Controls";
 import { Search } from "@material-ui/icons";
@@ -8,6 +7,7 @@ import {Toolbar, InputAdornment } from  '@material-ui/core';
 import Popup from "../../components/Popup";
 import  useTable from '../../components/useTable';
 import axios from '../../api/axios';
+import moment from 'moment';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import AddTransactionForm from './AddTransactionForm';
@@ -17,6 +17,7 @@ import AddTransactionForm from './AddTransactionForm';
 const useStyles = makeStyles(theme => ({
     pageContent: {
         padding: theme.spacing(3),
+        margin: theme.spacing(5),
     },
     searchInput: {
         width: '75%'
@@ -33,7 +34,7 @@ const headCells = [
     {id:'product' , label:'Product'},
     { id: 'quantity', label: 'Quantity' },
     { id: 'sell_price', label: 'Price' },
-    { id: 'time', label: 'Time' }
+    { id: 'date', label: 'Date' }
 ];
 
 
@@ -76,13 +77,13 @@ function AddTransaction() {
     },[])
 
     const addItemHandler =async (record) =>{
-        console.log(record);
         const request = {
             ...record
         }
 
         const response = await axios.post("/transaction", request);
-       //  setRecords([...record, response.data])
+        console.log(response.data);
+         //setRecords([...records, response.data])
     }
 
 
@@ -137,13 +138,13 @@ function AddTransaction() {
                         <TableBody>
                             {
                                 recordsAfterPagingAndSorting().map( item =>(
-                                    <TableRow key={item.id}>
+                                    <TableRow key={item._id}>
                                         <TableCell>{item.cust_name}</TableCell>
                                         <TableCell>{item.cust_address}</TableCell>
-                                        <TableCell>{item.item.item_name}</TableCell>
+                                        <TableCell >{item.item.item_name}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
                                         <TableCell>{item.sell_price}</TableCell>
-                                        <TableCell>{item.timestamp}</TableCell>
+                                        <TableCell>{moment(item.timestamp).format("MMM Do YY")}</TableCell>
                                         {/* <TableCell>
                                              <Controls.ActionButton
                                             color="primary"

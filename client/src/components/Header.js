@@ -4,9 +4,6 @@ import { AppBar, Toolbar, Grid,  makeStyles, Typography, CssBaseline } from '@ma
 const useStyles = makeStyles(theme => ({
     root: {
         backgroundColor: '#00000',
-        marginLeft: theme.spacing(10),
-
-        
     },
     
 }))
@@ -18,8 +15,8 @@ function Header() {
        <AppBar position="static" className={classes.root}>
            <Toolbar>
                <Grid container alignItems="center">
-                   <Grid item>
-                       <Typography variant="h3" color="initial">DashBoard</Typography>
+                   <Grid item xs={6}>
+                       <Typography variant="h5" color="initial">Hello Vishal!!!</Typography>
                    </Grid>
                </Grid>
            </Toolbar>

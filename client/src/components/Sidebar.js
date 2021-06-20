@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
         position: 'absolute',
         left: '0px',
         width: '80px',
-        height: '100vh',
+        height: '100%',
         backgroundColor: '#10100f',
     },
     sideIcon:{

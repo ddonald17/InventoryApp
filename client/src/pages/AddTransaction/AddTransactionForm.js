@@ -44,7 +44,6 @@ function AddTransactionForm(props) {
      useEffect(()=>{
        const getAllItem = async () =>{
         const allItem = await fetchItems();
-        // console.log(allItem)
         if(allItem) setItem(allItem);
        console.log(allItem)
 

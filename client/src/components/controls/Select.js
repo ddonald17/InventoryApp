@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, InputLabel, Select as MuiSelect, MenuItem, FormHelperText } from '@material-ui/core';
+import { FormControl, InputLabel, Select as MuiSelect, MenuItem } from '@material-ui/core';
 
 function Select(props) {
 

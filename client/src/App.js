@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Home from './pages/home/Home';
 import AddTransaction from './pages/AddTransaction/AddTransaction';
 import AddItems from './pages/AddItem/AddItems';
+import React, { useState } from 'react';
 
 const theme = createMuiTheme({
   palette: {
@@ -49,16 +50,17 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <Sidebar />
-        {/* <Header /> */}
 
         <div className={classes.appMain}>
+        <Header />
+
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/AddItems' exact component={AddItems} />
             <Route path='/AddTransaction' exact component={AddTransaction} />
           </Switch>
-          <CssBaseline />
         </div>
+      <CssBaseline />
       </ThemeProvider>
     </Router>
   );

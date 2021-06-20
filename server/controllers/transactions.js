@@ -8,7 +8,7 @@ export const addTrans = async (req, res) => {
     const newTrans = new Transaction({ cust_name, cust_address, item, quantity, sell_price });
 
     try {
-        await newTrans.save().populate('item');
+        await newTrans.save();
 
         res.status(201).json( newTrans );
     } catch (error) {

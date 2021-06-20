@@ -51,6 +51,18 @@ function AddItemForm(props) {
                         value={values.category}
                         onChange={handleInputChange}
                     />
+                   
+                    <div>
+                        <Controls.Button
+                            type="submit"
+                            text="Submit" />
+                        <Controls.Button
+                            text="Reset"
+                            color="default"
+                            onClick={resetForm} />
+                    </div>
+                </Grid>
+                <Grid xs={6}>
                     <Controls.Input
                         label="Buy Price"
                         name="buy_price"
@@ -63,16 +75,6 @@ function AddItemForm(props) {
                         value={values.stock}
                         onChange={handleInputChange}
                     />
-                    <div>
-                        <Controls.Button
-                            type="submit"
-                            text="Submit" />
-                        <Controls.Button
-                            text="Reset"
-                            color="default"
-                            onClick={resetForm} />
-                    </div>
-
                 </Grid>
 
              </Grid>
