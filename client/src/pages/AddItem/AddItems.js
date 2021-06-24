@@ -7,10 +7,10 @@ import { Search } from "@material-ui/icons";
 import {Toolbar, InputAdornment } from  '@material-ui/core';
 import Popup from "../../components/Popup";
 import  useTable from '../../components/useTable';
-import axios from '../../api/axios';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { createProduct, deleteProduct, updateProduct } from '../../actions/products';
 
 
 const useStyles = makeStyles(theme => ({
@@ -39,15 +39,15 @@ const headCells = [
 function AddItems() {
 
     const classes = useStyles();
+    const products = useSelector((state) => state.products);
     const [recordForEdit, setRecordForEdit] = useState(null);
     const [openPopup, setOpenPopup] = useState(false);
-    const [records, setRecords] = useState([]);
+    const [records, setRecords] = useState({});
     const [edit, setEdit] = useState(false);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
+    const dispatch = useDispatch();
 
-
-
-    const { TblContainer, TblHead,  TblPagination, recordsAfterPagingAndSorting } = useTable( records, headCells, filterFn);
+    const { TblContainer, TblHead,  TblPagination, recordsAfterPagingAndSorting } = useTable( products, headCells, filterFn);
     
     const handleSearch = e => {
         let target = e.target;
@@ -61,54 +61,20 @@ function AddItems() {
         })
     }
 
-    const fetchItems = async () =>{
-        const response= await axios.get("/product");
-        return response.data;
-    }
-
-     useEffect(()=>{
-       const getAllItem = async () =>{
-        const allItem = await fetchItems();
-        if(allItem) setRecords(allItem);
-       };
-       getAllItem();
-       
-    },[])
-
-
-    const addItemHandler =async (record) =>{
-        // console.log(record);
-        const request = {
-            ...record
-        }
-
-        const response = await axios.post("/product", request);
-         setRecords([...records, response.data])
-    }
-
-    const updateItemHandler = async (record) => {
-        console.log(record._id)
-
-        const response = await axios.patch(`/product/${record._id}`, record)
-        console.log(response.data) 
-        setRecords(records.map(record =>{
-            return record._id === response.data._id ? {...response.data} : record;
-        }))
-    }
 
     const removeItemHandler = async (record) => {
-        await axios.delete(`/product/${record._id}`);
-        // setRecords(...records);
+       dispatch(deleteProduct(record._id));
     }
 
     const addOrEdit = (item , resetForm) => {
         if (edit)
-           updateItemHandler(item);           
+           dispatch(updateProduct(item._id, item))          
         else
-           addItemHandler(item);
+           dispatch(createProduct(item));
         resetForm();
         setRecordForEdit(null);
         setEdit(false);
+        setRecords(products);
         setOpenPopup(false);  
     }
 

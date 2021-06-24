@@ -5,8 +5,10 @@ import Header from './components/Header';
 import Home from './pages/home/Home';
 import AddTransaction from './pages/AddTransaction/AddTransaction';
 import AddItems from './pages/AddItem/AddItems';
-import React, { useState } from 'react';
-
+import React, { useEffect } from 'react';
+import {useDispatch} from 'react-redux';
+import {getProducts} from './actions/products';
+import {getTransactions} from './actions/transactions';
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -46,6 +48,14 @@ const useStyles = makeStyles({
 function App() {
 
   const classes = useStyles();
+  const dispatch =useDispatch();
+
+  useEffect(()=>{
+    dispatch(getProducts());
+  },[dispatch]);
+
+  
+
   return (
     <Router>
       <ThemeProvider theme={theme}>

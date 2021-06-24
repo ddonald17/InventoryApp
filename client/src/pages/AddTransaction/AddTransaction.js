@@ -11,7 +11,8 @@ import moment from 'moment';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import AddTransactionForm from './AddTransactionForm';
-
+import { useDispatch } from 'react-redux';
+import {createTransactions} from '../../actions/transactions'
 
 
 const useStyles = makeStyles(theme => ({
@@ -46,6 +47,7 @@ function AddTransaction() {
     const [records, setRecords] = useState([]);
     const [isEdit , setEdit] = useState(false);
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
+    const dispatch = useDispatch();
 
 
 
@@ -58,7 +60,7 @@ function AddTransaction() {
                 if (target.value == "")
                     return items;
                 else
-                    return items.filter(x => x.item_name.toLowerCase().includes(target.value))
+                    return items.filter(x => x.cust_name.toLowerCase().includes(target.value))
             }
         })
     }
@@ -76,23 +78,10 @@ function AddTransaction() {
        getAllItem();
     },[])
 
-    const addItemHandler =async (record) =>{
-        const request = {
-            ...record
-        }
-
-        const response = await axios.post("/transaction", request);
-        console.log(response.data);
-         //setRecords([...records, response.data])
-    }
-
-
-
-
    
     const addOrEdit = (item , resetForm) => {
         if (!isEdit)
-           addItemHandler(item);
+        dispatch(createTransactions(item));
         else
             console.log("update")
         resetForm();

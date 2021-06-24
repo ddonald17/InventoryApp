@@ -4,9 +4,10 @@ import Transaction from '../models/transaction.js';
 
 export const addTrans = async (req, res) => {
     const { cust_name, cust_address, item, quantity, sell_price } = req.body;
-
+    //  let profit = sell_price - item.buy_price
+    //  console.log(profit);
     const newTrans = new Transaction({ cust_name, cust_address, item, quantity, sell_price });
-
+    
     try {
         await newTrans.save();
 

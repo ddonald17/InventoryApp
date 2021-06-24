@@ -2,20 +2,21 @@ import React , {useEffect, useState} from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../../components/useForm';
-import axios from '../../api/axios'
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const initialValues ={
     cust_name:'',
     cust_address:'',
     quantity:'',
+    product:'',
     sell_price:''
 }
 
 function AddTransactionForm(props) {
 
     const { addOrEdit, recordForEdit } = props;
-    const [item, setItem] = useState([]);
+    const products = useSelector((state) => state.products);
 
 
 
@@ -35,23 +36,6 @@ function AddTransactionForm(props) {
         if(recordForEdit != null)
         setValues({...recordForEdit})
     },[recordForEdit])
-
-    const fetchItems = async () =>{
-        const response= await axios.get("/product");
-        return response.data;
-    }
-
-     useEffect(()=>{
-       const getAllItem = async () =>{
-        const allItem = await fetchItems();
-        if(allItem) setItem(allItem);
-       console.log(allItem)
-
-       };
-       getAllItem();
-    },[])
-
-    
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -85,9 +69,9 @@ function AddTransactionForm(props) {
                     <Controls.Select
                         name="item"
                         label="Product"
-                        value={item._id}
+                        value={products._id}
                         onChange={handleInputChange}
-                        options={item}
+                        options={products}
                     />
                      <Controls.Input
                         label="Quantity"
@@ -101,11 +85,7 @@ function AddTransactionForm(props) {
                         value={values.sell_price}
                         onChange={handleInputChange}
                     />
-
-
                 </Grid>
-                    
-
              </Grid>
         </Form>
     )
