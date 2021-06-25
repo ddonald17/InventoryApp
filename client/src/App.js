@@ -8,7 +8,7 @@ import AddItems from './pages/AddItem/AddItems';
 import React, { useEffect } from 'react';
 import {useDispatch} from 'react-redux';
 import {getProducts} from './actions/products';
-import {getTransactions} from './actions/transactions';
+import Auth from './components/Auth'
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -68,6 +68,7 @@ function App() {
             <Route path='/' exact component={Home} />
             <Route path='/AddItems' exact component={AddItems} />
             <Route path='/AddTransaction' exact component={AddTransaction} />
+            <Route path='/Auth' exact component={Auth} />
           </Switch>
         </div>
       <CssBaseline />
