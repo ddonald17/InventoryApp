@@ -7,19 +7,21 @@ export const addTrans = async (req, res) => {
     const newTrans = new Transaction({ cust_name, cust_address, item, quantity, sell_price });
     
     try {
+
+        // Get new Product
+        let product = await Product.findOne({ _id: item }).lean().exec();
+        console.log(`UPDATED PRODUCT`, product);
+
+        // Get the quantity
+        let updatedQuantity = product.stock - Number(quantity);
+        console.log(`UPDATED QUANTITY:`, updatedQuantity);
+
+
+        product = await Product.findByIdAndUpdate(item, { stock: updatedQuantity }, { new: true }).lean().exec();
+        console.log(`UPDATED PRODUCT `, product);
+
+
         await newTrans.save();
-        
-        // 1. Create variables what needs to be replaced, what should be replaced with
-        let itemId = item
-        let itemObject = await Product.findById(itemId)
-        let quantityToBeUpdated = itemObject.stock - quantity
-        
-        let updatedItem = Product.findByIdAndUpdate(item, { stock: quantityToBeUpdated })
-        newTrans.item = updatedItem
-
-        // 2. Update the thing
-
-        // 3.  Send response
 
         res.status(201).json( newTrans );
     } catch (error) {
