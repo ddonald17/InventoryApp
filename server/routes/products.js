@@ -4,8 +4,8 @@ import { deleteProd, updateProd, getProd, getProds, addProd } from '../controlle
 
 const router = express.Router();
 
-router.get('/', getProds);
-router.post('/', auth, addProd);
+router.get('/',getProds);
+router.post('/', addProd);
 router.get('/:id', getProd);
 router.patch('/:id', updateProd);
 router.delete('/:id', deleteProd);

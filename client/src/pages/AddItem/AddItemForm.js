@@ -62,7 +62,7 @@ function AddItemForm(props) {
                             onClick={resetForm} />
                     </div>
                 </Grid>
-                <Grid xs={6}>
+                <Grid item xs={6}>
                     <Controls.Input
                         label="Buy Price"
                         name="buy_price"

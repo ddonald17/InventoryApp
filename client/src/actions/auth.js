@@ -2,7 +2,7 @@ import axios from "../api/axios";
 
 export const signin = (formData, router) => async (dispatch) => {
     try {
-      const { data } = await axios.post("/signin", formData);
+      const { data } = await axios.post("/user/signin", formData);
   
       dispatch({ type: "AUTH", data });
   
@@ -14,7 +14,7 @@ export const signin = (formData, router) => async (dispatch) => {
   
   export const signup = (formData, router) => async (dispatch) => {
     try {
-      const { data } = await axios.post("/signup", formData);
+      const { data } = await axios.post("/user/signup", formData);
   
       dispatch({ type: "AUTH", data });
   

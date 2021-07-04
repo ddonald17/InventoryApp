@@ -2,7 +2,7 @@ import React from 'react';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import ReceiptIcon from '@material-ui/icons/Receipt';
-import { makeStyles, CssBaseline } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import {Link} from 'react-router-dom';
 import AirplayOutlinedIcon from '@material-ui/icons/AirplayOutlined';

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Avatar,  Paper, Grid, Typography, Container, makeStyles } from '@material-ui/core';
+import { Avatar,  Paper, Grid, Typography, Container, makeStyles, Button } from '@material-ui/core';
 import LockOutlineIcon from "@material-ui/icons/LockOpenOutlined"
 import Controls from './controls/Controls';
+import { useHistory } from 'react-router-dom';
+import { signin, signup } from '../actions/auth';
+import { useDispatch } from 'react-redux';
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,19 +39,37 @@ const useStyles = makeStyles(theme => ({
 
 function Auth() {
     const classes = useStyles();
+    const [form, setForm] = useState(initialState);
     const [showPassword, setShowPassword] = useState(false);
+    const [isSignup, setIsSignup] = useState(false);
+    const [formData, setFormData] = useState();
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-    const isSignup = false;
 
     const handleShowPassword = () => setShowPassword(!showPassword);
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(form)
+        if(isSignup) {
+            dispatch(signup(formData, history))
+        } else {
+            dispatch(signin(formData, history))
+        }
 
     };
 
-    const handleChange =() => {
-
+    const handleChange =(e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
     };
+
+    const switchMode = () => {
+        setForm(initialState);
+        setIsSignup((prevIsSignup) => !prevIsSignup);
+        setShowPassword(false);
+      };
+    
     return (
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
@@ -61,12 +82,12 @@ function Auth() {
                     <Grid container spacing={2}>
                         {isSignup && (
                             <>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} >
                                     <Controls.Input 
                                      name="firstName"
                                      label="First Name"
                                      onChange={handleChange}
-                                     autofocus
+                                     autoFocus
                                      />
                                  </Grid>
                                  <Grid item xs={12}>
@@ -74,7 +95,7 @@ function Auth() {
                                      name="lastName"
                                      label="Last Name"
                                      onChange={handleChange}
-                                     autofocus
+                                     autoFocus
                                      />
                                  </Grid>
                             </>
@@ -93,8 +114,9 @@ function Auth() {
                                 name="password"
                                 label="Password"
                                 onChange={handleChange}
+                                type={showPassword ? 'text' : 'password'}
                                 handleShowPassword = {handleShowPassword}
-                                autofocus
+                                autoFocus
                             />
                        </Grid>
                        {isSignup &&
@@ -108,11 +130,15 @@ function Auth() {
                            /> 
                        </Grid>
                        }
-                        <Controls.Button className = {classes.submit} text={isSignup ? 'Sign Up' : 'Sign In'}/>
+                        <Controls.Button className = {classes.submit} 
+                        text={isSignup ? 'Sign Up' : 'Sign In'}
+                        type='submit'/>
                            
-                         <Grid container justify="flex-start"> 
+                         <Grid container justify="flex-end"> 
                             <Grid item>
-                                <Controls.Button text= { isSignup ? 'Already have an account? Sign in' : 'Dont have an account ? Sign Up' } variant='text' />
+                            <Button onClick={switchMode}>
+                               { isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up" }
+                            </Button>
                             </Grid>
                         </Grid>
                     </Grid>

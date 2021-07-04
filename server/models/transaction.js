@@ -20,10 +20,7 @@ const TransSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    // profit:{
-    //     type: Number,
-    //     // required: true
-    // },
+   
     timestamp:{
         type: Date,
         default: new Date()

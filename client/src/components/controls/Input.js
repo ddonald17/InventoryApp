@@ -6,20 +6,23 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 export default function Input(props) {
 
-    const { name, label, value, onChange, type, handleShowPassword, ...others } = props;
+    const { name, label, value, handleChange, type, handleShowPassword, autoFocus, ...others } = props;
     return (
         <TextField
             variant="outlined"
             label={label}
             name={name}
+            required
+            fullWidth
             value={value}
-            onChange={onChange}
+            onChange={handleChange}
             type ={type}
+            autoFocus = {autoFocus}
             InputProps={name === 'password' ? {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={handleShowPassword}>
-                      {type === 'password' ? <Visibility /> : <VisibilityOff />}
+                      {type === 'password' ?  <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 ),
